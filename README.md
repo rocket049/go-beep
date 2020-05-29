@@ -1,8 +1,8 @@
 # 说明
 本程序为 `go` 程序提供一个类似 `Windows API`：`Beep` 的电子音合成对象 `BeepPlayer`。使用方法：
 
-1. 初始化：player,err:=NewBeepPlayer()
-2. 发音：player.Beep(freq, delay) ---- freq表示频率，delay表示以毫秒为单位的时长
+1. 初始化：player,err := NewBeepPlayer()
+2. 发音：err = player.Beep(freq, delay) ---- freq表示频率，delay表示以毫秒为单位的时长
 3. 卸载：player.Close()
 
 # 安装

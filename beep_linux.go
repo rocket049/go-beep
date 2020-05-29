@@ -85,7 +85,12 @@ func (p *BeepPlayer) Close() {
 
 //freq 频率
 //delay 毫秒
-func (p *BeepPlayer) Beep(freq, delay int) error {
+func (p *BeepPlayer) Beep(freq, delay int) (e error) {
+	defer func() {
+		if r := recover(); r != nil {
+			e = r.(error)
+		}
+	}()
 	p.once.Do(func() {
 		portaudio.Initialize()
 		h, err := portaudio.DefaultHostApi()
