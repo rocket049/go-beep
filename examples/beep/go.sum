@@ -1,0 +1,6 @@
+gitee.com/rocket049/go-beep v0.0.0-20200529070609-6f1acb4ab8d1 h1:Kqlp9bMzVW2qrx5Bu6N6HoXQSvPWkfTXMr7WhKBfGUw=
+gitee.com/rocket049/go-beep v0.0.0-20200529070609-6f1acb4ab8d1/go.mod h1:P2zG5Bf3BocHhwovl6J4/cUTubfmH2Cd4BJZLl7Mjks=
+github.com/gordonklaus/portaudio v0.0.0-20180817120803-00e7307ccd93 h1:TSG+DyZBnazM22ZHyHLeUkzM34ClkJRjIWHTq4btvek=
+github.com/gordonklaus/portaudio v0.0.0-20180817120803-00e7307ccd93/go.mod h1:HfYnZi/ARQKG0dwH5HNDmPCHdLiFiBf+SI7DbhW7et4=
+golang.org/x/sys v0.0.0-20200523222454-059865788121 h1:rITEj+UZHYC927n8GT97eC3zrpzXdb/voyeOuVKS46o=
+golang.org/x/sys v0.0.0-20200523222454-059865788121/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
