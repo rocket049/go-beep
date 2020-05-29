@@ -90,7 +90,7 @@ func (p *BeepPlayer) Beep(freq, delay int) error {
 		portaudio.Initialize()
 		h, err := portaudio.DefaultHostApi()
 		chk(err)
-		p.param = portaudio.LowLatencyParameters(nil, h.DefaultOutputDevice)
+		p.param = portaudio.HighLatencyParameters(nil, h.DefaultOutputDevice)
 		p.param.Output.Channels = 1
 		p.sampleRate = p.param.SampleRate
 
