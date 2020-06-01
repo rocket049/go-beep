@@ -70,7 +70,7 @@ func (p *BeepPlayer) getSinSrc(freq int) (ch chan float32, err error) {
 		var step float64 = 0.9999 / float64(max)
 		for {
 			for i := 0; i < max; i++ {
-				v := 0.9 * math.Sin(math.Pi*float64(i)*step)
+				v := 0.9*0.5*math.Sin(2*math.Pi*float64(i)*step) + 0.5
 				ch <- float32(v)
 			}
 		}
