@@ -25,8 +25,9 @@ func NewBeepPlayer() (p *BeepPlayer, e error) {
 
 //freq 频率
 //delay 毫秒
-func (p *BeepPlayer) Beep(freq, delay int) {
-	p.proc.Call(uintptr(freq), uintptr(delay))
+func (p *BeepPlayer) Beep(freq, delay int) error {
+	_, _, err := p.proc.Call(uintptr(freq), uintptr(delay))
+	return err
 }
 
 func (p *BeepPlayer) Close() {

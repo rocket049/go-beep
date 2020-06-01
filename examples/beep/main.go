@@ -1,6 +1,8 @@
 package main
 
-import "gitee.com/rocket049/go-beep"
+import (
+	"gitee.com/rocket049/go-beep"
+)
 
 func main() {
 	player, err := beep.NewBeepPlayer()
