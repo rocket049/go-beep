@@ -23,6 +23,8 @@ type BeepPlayer struct {
 	onceBeep   sync.Once
 	ch         chan float32
 	max        int32
+	once3      sync.Once
+	stream     *portaudio.Stream
 }
 
 func NewBeepPlayer() (p *BeepPlayer, e error) {
@@ -63,6 +65,7 @@ func (p *BeepPlayer) Close() {
 	defer func() {
 		recover()
 	}()
+	p.stream.Stop()
 	portaudio.Terminate()
 	close(p.ch)
 }
@@ -87,14 +90,16 @@ func (p *BeepPlayer) Beep(freq, delay int) (e error) {
 
 	ch, err := p.getSinSrc(freq)
 	chk(err)
-	stream, err := portaudio.OpenStream(p.param, func(out []float32) {
-		for i := range out {
-			out[i] = <-ch
-		}
+	p.once3.Do(func() {
+		p.stream, err = portaudio.OpenStream(p.param, func(out []float32) {
+			for i := range out {
+				out[i] = <-ch
+			}
+		})
+		chk(err)
+		chk(p.stream.Start())
 	})
-	chk(err)
-	chk(stream.Start())
+
 	time.Sleep(time.Millisecond * time.Duration(delay))
-	chk(stream.Stop())
 	return nil
 }

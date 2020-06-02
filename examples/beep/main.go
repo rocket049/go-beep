@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"gitee.com/rocket049/go-beep"
 )
 
@@ -10,8 +12,9 @@ func main() {
 		panic(err)
 	}
 	defer player.Close()
-	snds := []int{500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000}
+	snds := []int{50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000}
 	for _, v := range snds {
 		player.Beep(v, 500)
 	}
+	time.Sleep(time.Second * 3)
 }
