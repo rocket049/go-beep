@@ -60,6 +60,9 @@ func (p *BeepPlayer) getSinSrc(freq int) (ch chan float32, err error) {
 }
 
 func (p *BeepPlayer) Close() {
+	defer func() {
+		recover()
+	}()
 	portaudio.Terminate()
 	close(p.ch)
 }
