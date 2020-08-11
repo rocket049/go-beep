@@ -34,7 +34,7 @@ func NewBeepPlayer() (p *BeepPlayer, e error) {
 func (p *BeepPlayer) getSinSrc(freq int) (ch chan float32, err error) {
 	var freqFloat float64
 	if freq <= 0 {
-		freqFloat = 0.01
+		freqFloat = 1.0
 	} else {
 		freqFloat = float64(freq)
 	}
