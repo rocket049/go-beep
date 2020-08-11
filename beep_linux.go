@@ -32,7 +32,13 @@ func NewBeepPlayer() (p *BeepPlayer, e error) {
 }
 
 func (p *BeepPlayer) getSinSrc(freq int) (ch chan float32, err error) {
-	var max = int(p.sampleRate / float64(freq))
+	var freqFloat float64
+	if freq <= 0 {
+		freqFloat = 0.01
+	} else {
+		freqFloat = float64(freq)
+	}
+	var max = int(p.sampleRate / freqFloat)
 	err = nil
 	if max == 0 {
 		err = fmt.Errorf("freq is too big(>%f)", p.sampleRate)
