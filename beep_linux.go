@@ -55,12 +55,17 @@ func (p *BeepPlayer) getSinSrc(freq int, delay int) (ch chan float32, err error)
 			}()
 
 			for {
-				m := int(atomic.LoadInt32(&p.max))
 				num := int(atomic.LoadInt32(&p.num))
+				if num == 0 {
+					p.ch <- 0.5
+					continue
+				}
+				m := int(atomic.LoadInt32(&p.max))
 				var step float64 = 0.9999 / float64(m)
 				for i := 0; i < num; i++ {
 					v := 0.9*0.5*math.Sin(2*math.Pi*float64(i)*step) + 0.5
 					p.ch <- float32(v)
+					atomic.AddInt32(&p.num, -1)
 				}
 			}
 		}()

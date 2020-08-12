@@ -13,14 +13,14 @@ func main() {
 		panic(err)
 	}
 	defer player.Close()
-	snds := []int{350, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000}
+	snds := []int{350, 400, 500, 600, 700, 800, 900}
 	player.Beep(0, 1000)
 	for _, v := range snds {
-		player.Beep(v, 1000)
 		fmt.Printf("Freq:%d\n", v)
+		player.Beep(v, 1000)
+
 	}
 
-	player.Beep(0, 1000)
-	time.Sleep(time.Second * 1)
+	time.Sleep(time.Second * 2)
 
 }
