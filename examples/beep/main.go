@@ -16,5 +16,5 @@ func main() {
 	for _, v := range snds {
 		player.Beep(v, 500)
 	}
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * 2)
 }
