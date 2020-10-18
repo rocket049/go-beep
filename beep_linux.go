@@ -25,16 +25,17 @@ type BeepPlayer struct {
 	max        int32
 	once3      sync.Once
 	stream     *portaudio.Stream
+	num        int32
 }
 
 func NewBeepPlayer() (p *BeepPlayer, e error) {
 	return &BeepPlayer{}, nil
 }
 
-func (p *BeepPlayer) getSinSrc(freq int) (ch chan float32, err error) {
+func (p *BeepPlayer) getSinSrc(freq int, delay int) (ch chan float32, err error) {
 	var freqFloat float64
 	if freq <= 0 {
-		freqFloat = 1.0
+		freqFloat = 0.01
 	} else {
 		freqFloat = float64(freq)
 	}
@@ -45,6 +46,7 @@ func (p *BeepPlayer) getSinSrc(freq int) (ch chan float32, err error) {
 		return
 	}
 	atomic.StoreInt32(&p.max, int32(max))
+	atomic.StoreInt32(&p.num, int32(delay*int(p.sampleRate)/1000))
 	p.onceBeep.Do(func() {
 		p.ch = make(chan float32, 2)
 		go func() {
@@ -53,11 +55,17 @@ func (p *BeepPlayer) getSinSrc(freq int) (ch chan float32, err error) {
 			}()
 
 			for {
+				num := int(atomic.LoadInt32(&p.num))
+				if num == 0 {
+					p.ch <- 0.5
+					continue
+				}
 				m := int(atomic.LoadInt32(&p.max))
 				var step float64 = 0.9999 / float64(m)
-				for i := 0; i < m; i++ {
+				for i := 0; i < num; i++ {
 					v := 0.9*0.5*math.Sin(2*math.Pi*float64(i)*step) + 0.5
 					p.ch <- float32(v)
+					atomic.AddInt32(&p.num, -1)
 				}
 			}
 		}()
@@ -94,7 +102,7 @@ func (p *BeepPlayer) Beep(freq, delay int) (e error) {
 
 	})
 
-	ch, err := p.getSinSrc(freq)
+	ch, err := p.getSinSrc(freq, delay)
 	chk(err)
 	p.once3.Do(func() {
 		p.stream, err = portaudio.OpenStream(p.param, func(out []float32) {
