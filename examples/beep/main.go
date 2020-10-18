@@ -6,6 +6,7 @@ import (
 	"gitee.com/rocket049/go-beep"
 )
 
+//电子印合成
 func main() {
 	player, err := beep.NewBeepPlayer()
 	if err != nil {
